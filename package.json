@@ -2,6 +2,7 @@
     "name": "asmcrypto.js",
     "description": "Asm.js implementation of WebCrypto API",
     "homepage": "https://github.com/vibornoff/asmcrypto.js",
+    "version": "0.1.0",
     "main": "asmcrypto.js",
     "license": "MIT",
     "author": {
