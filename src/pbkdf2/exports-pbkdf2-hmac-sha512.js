@@ -2,10 +2,10 @@
  * PBKDF2-HMAC-SHA512 exports
  */
 
-function pbkdf2_hmac_sha512_bytes ( password, salt, iterations, dklen ) {
+function pbkdf2_hmac_sha512_bytes ( password, salt, iterations, dklen, progress ) {
     if ( password === undefined ) throw new SyntaxError("password required");
     if ( salt === undefined ) throw new SyntaxError("salt required");
-    return get_pbkdf2_hmac_sha512_instance().reset( { password: password } ).generate( salt, iterations, dklen ).result;
+    return get_pbkdf2_hmac_sha512_instance().reset( { password: password } ).generate( salt, iterations, dklen, progress ).result;
 }
 
 function pbkdf2_hmac_sha512_hex ( password, salt, iterations, dklen ) {

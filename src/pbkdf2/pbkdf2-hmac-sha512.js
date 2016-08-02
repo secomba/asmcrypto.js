@@ -9,7 +9,8 @@ function pbkdf2_hmac_sha512_constructor ( options ) {
     return this;
 }
 
-function pbkdf2_hmac_sha512_generate ( salt, count, length ) {
+function pbkdf2_hmac_sha512_generate ( salt, count, length, progress ) {
+    var total = count;
     if ( this.result !== null )
         throw new IllegalStateError("state must be reset before processing new data");
 
@@ -28,10 +29,18 @@ function pbkdf2_hmac_sha512_generate ( salt, count, length ) {
         var l = ( i < blocks ? 0 : length % this.hmac.HMAC_SIZE ) || this.hmac.HMAC_SIZE;
 
         this.hmac.reset().process(salt);
-        this.hmac.hash.asm.pbkdf2_generate_block( this.hmac.hash.pos, this.hmac.hash.len, i, count, 0 );
+        this.hmac.hash.asm.pbkdf2_generate_block( this.hmac.hash.pos, this.hmac.hash.len, i, count, 0, function(current) {
+            if (progress) {
+                progress(total - current, count);
+            }
+        } );
 
         this.result.set( this.hmac.hash.heap.subarray( 0, l ), j );
+        if (progress) {
+            progress(count, count);
+        }
     }
+
 
     return this;
 }

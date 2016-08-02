@@ -3010,7 +3010,7 @@ function sha512_asm ( stdlib, foreign, buffer ) {
     // salt is assumed to be already processed
     // offset — multiple of 128
     // output — multiple of 64
-    function pbkdf2_generate_block ( offset, length, block, count, output ) {
+    function pbkdf2_generate_block ( offset, length, block, count, output, progress) {
         offset = offset|0;
         length = length|0;
         block = block|0;
@@ -3060,6 +3060,10 @@ function sha512_asm ( stdlib, foreign, buffer ) {
 
         // perform the rest iterations
         while ( (count|0) > 0 ) {
+            if (progress) {
+                progress(count);
+            }
+
             hmac_reset();
             _core( t0h, t0l, t1h, t1l, t2h, t2l, t3h, t3l, t4h, t4l, t5h, t5l, t6h, t6l, t7h, t7l, 0x80000000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1536 );
 

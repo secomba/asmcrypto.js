@@ -1,5 +1,8 @@
 // Default modules to build
 var defaults = [
+    'utils',
+    'sha256',
+    'sha512',
     'hmac-sha512',
     'pbkdf2-hmac-sha512',
 ];
